@@ -28,7 +28,7 @@ with build in features of [Jest Playwright](https://www.npmjs.com/package/jest-p
     - [🔗 Links (Jira and TMS)](#-links-jira-and-tms)
   - [👩‍🎓 Advanced](#-advanced)
     - [🎛 Global Allure API](#-global-allure-api)
-  - [Custom test environment](#-usage-with-custom-testEnvironment)
+  - [Custom test environment](#usage-with-custom-testenvironment)
 ---
 
 ## ❗️ Requirements
