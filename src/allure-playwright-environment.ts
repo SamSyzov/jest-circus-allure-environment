@@ -1,13 +1,13 @@
 import {basename} from 'path';
-import {AllureRuntime, IAllureConfig} from 'allure-js-commons';
+import {AllureRuntime, ContentType, IAllureConfig} from 'allure-js-commons';
 import type {Circus, Config} from '@jest/types';
 
 import type {EnvironmentContext, JestEnvironment} from '@jest/environment';
 import AllureReporter from './allure-reporter';
+const PlaywrightEnvironment = require('jest-playwright-preset/lib/PlaywrightEnvironment').default
 
-function extendAllureBaseEnvironment<TBase extends typeof JestEnvironment>(Base: TBase): TBase {
-	// @ts-expect-error (ts(2545)) Incorrect assumption about a mixin class: https://github.com/microsoft/TypeScript/issues/37142
-	return class AllureBaseEnvironment extends Base {
+
+	export default class AllurePlaywrightEnvironment extends PlaywrightEnvironment {
 		global: any;
 		private readonly reporter: AllureReporter;
 		private readonly testPath: string;
@@ -69,10 +69,10 @@ function extendAllureBaseEnvironment<TBase extends typeof JestEnvironment>(Base:
 			return super.teardown();
 		}
 
-		handleTestEvent = (event: Circus.Event, state: Circus.State) => {
+		handleTestEvent(event: Circus.Event, state: Circus.State) {
 			// Console.log(`Event: ${event.name}`);
 			// Console.log({event});
-
+			super.handleTestEvent(event)
 			switch (event.name) {
 				case 'setup':
 
@@ -232,6 +232,4 @@ function extendAllureBaseEnvironment<TBase extends typeof JestEnvironment>(Base:
 			}
 		};
 	};
-}
 
-export default extendAllureBaseEnvironment;

@@ -1,7 +1,7 @@
 {
-  "name": "jest-circus-allure-environment",
-  "version": "1.1.1",
-  "repository": "https://github.com/ryparker/jest-circus-allure-environment.git",
+  "name": "jest-circus-allure-playwright-environment",
+  "version": "1.0.1",
+  "repository": "https://github.com/SamSyzov/jest-circus-allure-environment.git",
   "author": "Ryan Parker <ryan.parker3@outlook.com>",
   "license": "MIT",
   "files": [
@@ -87,6 +87,7 @@
     "jest-circus": "^27.0.3",
     "jest-docblock": "^27.0.1",
     "jest-environment-node": "^27.0.3",
+    "jest-playwright-preset": "^1.7.0",
     "lodash": "^4.17.21",
     "prettier": "^2.3.0",
     "pretty-format": "^27.0.2",

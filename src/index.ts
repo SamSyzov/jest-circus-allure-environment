@@ -4,8 +4,7 @@ declare global {
 	const allure: JestAllureInterface;
 }
 
-export {default} from './allure-node-environment';
-export {default as extendAllureBaseEnvironment} from './allure-base-environment';
+export {default} from './allure-playwright-environment';
 
 export * from 'allure-js-commons';
 export {ContentType} from './jest-allure-interface';

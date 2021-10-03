@@ -13,7 +13,7 @@
     "resolveJsonModule": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
-    "types": ["node", "jest", "allure-js-commons", "lodash"],
+    "types": ["node", "jest", "allure-js-commons", "lodash", "jest-playwright-preset"],
     "outDir": "dist/"
   },
   "include": ["src/**/*"],

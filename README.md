@@ -1,12 +1,13 @@
 # Jest Circus Allure Environment
 
 [![jest](https://jestjs.io/img/jest-badge.svg)](https://github.com/facebook/jest)
-![Lint-Build-Test-Publish](https://github.com/ryparker/jest-circus-allure-reporter/workflows/Lint-Build-Test-Publish/badge.svg)
-[![XO code style](https://img.shields.io/badge/code_style-XO-5ed9c7.svg)](https://github.com/xojs/xo)
-[![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-A Jest Circus environment for Allure reporting.
+A Jest Circus Playwright environment for Allure reporting with Playwright .
+
+
+Based on [Jest Circus environment for Allure](https://www.npmjs.com/package/jest-circus-allure-environment)
+with build in features of [Jest Playwright](https://www.npmjs.com/package/jest-playwright-preset)
 
 ![Allure Report](https://user-images.githubusercontent.com/2823336/40350093-59cad576-5db1-11e8-8210-c4db3bf825a1.png)
 
@@ -27,7 +28,7 @@ A Jest Circus environment for Allure reporting.
     - [🔗 Links (Jira and TMS)](#-links-jira-and-tms)
   - [👩‍🎓 Advanced](#-advanced)
     - [🎛 Global Allure API](#-global-allure-api)
-
+  - [Custom test environment](#-usage-with-custom-testEnvironment)
 ---
 
 ## ❗️ Requirements
@@ -325,4 +326,41 @@ allure.tag(name: string): void;
  * Add a custom label to the report of the current test.
  */
 allure.label(name: string, value: string): void;
+```
+## Usage with custom [testEnvironment](https://jestjs.io/docs/en/configuration#testenvironment-string)
+
+You can use **jest-playwright** with custom test environment for taking screenshots during test failures for example:
+
+**jest.config.json**
+
+```json
+"testEnvironment": "./CustomEnvironment.js"
+```
+
+**CustomEnvironment.js**
+
+```js
+const AllurePlaywrightEnvironment =
+	require('jest-circus-allure-playwright-environment/dist/allure-playwright-environment').default
+class CustomEnvironment extends AllurePlaywrightEnvironment {
+  async setup() {
+    await super.setup()
+    // Your setup
+  }
+  async teardown() {
+    // Your teardown
+    await super.teardown()
+  }
+  async handleTestEvent(event) {
+    await super.handleTestEvent(event);
+    if (event.name === 'test_done' && event.test.errors.length > 0) {
+      const parentName = event.test.parent.name.replace(/\W/g, '-')
+      const specName = event.test.name.replace(/\W/g, '-')
+      await this.global.page.screenshot({
+        path: `screenshots/${parentName}_${specName}.png`,
+      })
+    }
+  }
+}
+module.exports = CustomEnvironment
 ```
